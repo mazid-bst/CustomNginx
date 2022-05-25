@@ -1,0 +1,13 @@
+
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-new
+spec:
+  selector:
+    app: nginx-new
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
