@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-in
+  name: nginx-sg
 spec:
   selector:
     matchLabels:
-      app: nginx-in
+      app: nginx-sg
   replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
-        app: nginx-in
+        app: nginx-sg
     spec:
       containers:
       - name: nginx
