@@ -1,6 +1,6 @@
 import os
 # to open/create a new html file in the write mode
-f = open('/usr/share/nginx/html/index.html', 'w')
+f = open('/var/www/html/index.html', 'w')
 
 # the html code which will go in the file GFG.html
 html_template = """<html>
