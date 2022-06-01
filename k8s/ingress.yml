@@ -11,41 +11,27 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
     #alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:362977260021:certificate/351e2a24-83bc-409c-b39a-fa63235622fc
     #alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-    alb.ingress.kubernetes.io/actions.forward-multiple-tg: '{"Type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"nginx-new","ServicePort":"80","Weight":WEIGHTOFNEW},{"ServiceName":"nginx-old","ServicePort":"8080","Weight":WEIGHTOFOLD}]}}'
+    alb.ingress.kubernetes.io/actions.rule-path3: '{"type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"nginx-in","ServicePort":"80"}]}}'
+    alb.ingress.kubernetes.io/conditions.rule-path3: '[{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "cloudfront-viewer-country", "values":["IN"]}}]'
+    alb.ingress.kubernetes.io/actions.rule-path4: '{"type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"nginx-us","ServicePort":"80"}]}}'
+    alb.ingress.kubernetes.io/conditions.rule-path4: '[{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "cloudfront-viewer-country", "values":["US"]}}]'
+    alb.ingress.kubernetes.io/actions.rule-path5: '{"type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"nginx-sg","ServicePort":"80"}]}}'
+    alb.ingress.kubernetes.io/conditions.rule-path5: '[{"field":"http-header","httpHeaderConfig":{"httpHeaderName": "cloudfront-viewer-country", "values":["SG"]}}]'
+    alb.ingress.kubernetes.io/actions.rule-path6: '{"type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"nginx-global","ServicePort":"80"}]}}'
 
 spec:
+  backend:
+    serviceName: rule-path6
+    servicePort: use-annotation
   rules:
   - http:
       paths:
-        # - backend:
-        #     serviceName: nginx-old
-        #     servicePort: 8080
         - backend:
-            serviceName: forward-multiple-tg
+            serviceName: rule-path3
             servicePort: use-annotation
-        # - path: /*
-        #   backend:
-        #     serviceName: nginx-new
-        #     servicePort: 80
-
-#  spec:
-#    rules:
-#      - host: staging-aws.carl.gg
-#        http:
-#          paths:
-#            - path: /*
-#              backend:
-# #               serviceName: ssl-redirect
-# #               servicePort: use-annotation
-# #           - path: /api/*
-# #             backend:
-# #               serviceName: carlbot-api-svc
-# #               servicePort: 5000
-# #           - path: /webhooks/*
-# #             backend:
-# #               serviceName: webhook-checker-svc
-# #               servicePort: 1337
-# #           - path: /*
-# #             backend:
-# #               serviceName: static-svc
-# #               servicePort: 80
+        - backend:
+            serviceName: rule-path4
+            servicePort: use-annotation
+        - backend:
+            serviceName: rule-path5
+            servicePort: use-annotation

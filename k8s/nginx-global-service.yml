@@ -3,10 +3,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-new
+  name: nginx-global
 spec:
   selector:
-    app: nginx-new
+    app: nginx-global
   ports:
     - protocol: TCP
       port: 80

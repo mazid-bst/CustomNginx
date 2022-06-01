@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-us
+spec:
+  selector:
+    matchLabels:
+      app: nginx-us
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx-us
+    spec:
+      containers:
+      - name: nginx
+        image: 327952826057.dkr.ecr.us-east-1.amazonaws.com/mazid-temp:release_image
+        ports:
+        - containerPort: 80
