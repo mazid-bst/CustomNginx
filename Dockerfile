@@ -1,9 +1,2 @@
-FROM nginx:1.16-alpine
-
-RUN apk update
-RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
-    pip3 install --upgrade pip setuptools && \
-    apk del .build-deps
-RUN apk add --no-cache --update python3
-ADD ./index.py  /var/www//html/
-ENTRYPOINT ["/usr/bin/python3 /var/www/html/index.py"]
+FROM nginx
+ADD ./index.html /usr/share/nginx/html
