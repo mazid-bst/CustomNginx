@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1.16-alpine
 
 RUN apk update
 RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
