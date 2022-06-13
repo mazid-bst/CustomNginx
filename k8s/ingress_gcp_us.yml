@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-us
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-header: cloudfront-viewer-country
+    nginx.ingress.kubernetes.io/canary-by-header-value: US
+spec:
+  ingressClassName: nginx-public
+  rules:
+  - host: "*.bstkinternal.net"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-us
+            port:
+              number: 80

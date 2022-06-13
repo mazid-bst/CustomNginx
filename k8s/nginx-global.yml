@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: 327952826057.dkr.ecr.us-east-1.amazonaws.com/mazid-temp:release_image
+        image: release_image
         ports:
         - containerPort: 80
         env:
